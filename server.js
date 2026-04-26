@@ -13,6 +13,7 @@ const estoqueRoutes = require('./routes/estoqueRoute');
 const cadernoRoutes = require('./routes/cadernoRoute');
 const financeiroRoutes = require('./routes/financeiroRoute');
 const produtividadeRoutes = require('./routes/produtividadeRoute');
+const plantiosRoutes = require('./routes/plantiosRoute');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/talhoes', talhoesRoutes);
@@ -20,6 +21,7 @@ app.use('/api/estoque', estoqueRoutes);
 app.use('/api/caderno', cadernoRoutes);
 app.use('/api/financeiro', financeiroRoutes);
 app.use('/api/produtividade', produtividadeRoutes);
+app.use('/api/plantios', plantiosRoutes);
 
 app.get('/', (req, res) => {
   res.json({ mensagem: 'CampoFácil API funcionando!' });

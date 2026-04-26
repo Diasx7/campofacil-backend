@@ -85,4 +85,26 @@ router.get('/perfil', autenticar, async (req, res) => {
   }
 });
 
+// trocar senha
+router.put('/senha', autenticar, async (req, res) => {
+  const { senhaAtual, novaSenha } = req.body;
+  try {
+    const resultado = await pool.query('SELECT senha FROM usuarios WHERE id=$1', [req.usuarioId]);
+    const usuario = resultado.rows[0];
+
+    const senhaCorreta = await bcrypt.compare(senhaAtual, usuario.senha);
+    if (!senhaCorreta) {
+      return res.status(400).json({ erro: 'Senha atual incorreta' });
+    }
+
+    const novaSenhaCriptografada = await bcrypt.hash(novaSenha, 10);
+    await pool.query('UPDATE usuarios SET senha=$1 WHERE id=$2', [novaSenhaCriptografada, req.usuarioId]);
+
+    res.json({ mensagem: 'Senha alterada com sucesso' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ erro: 'Erro ao trocar senha' });
+  }
+});
+
 module.exports = router;
