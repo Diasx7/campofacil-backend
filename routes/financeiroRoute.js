@@ -19,6 +19,11 @@ router.get('/', autenticar, async (req, res) => {
 // cria transacao
 router.post('/', autenticar, async (req, res) => {
   const { tipo, data, descricao, categoria, valor, talhao } = req.body;
+
+  if (!tipo || !data || !valor) {
+    return res.status(400).json({ erro: 'Tipo, data e valor são obrigatórios' });
+  }
+
   try {
     const resultado = await pool.query(
       'INSERT INTO financeiro (usuario_id, tipo, data, descricao, categoria, valor, talhao) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',

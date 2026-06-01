@@ -20,6 +20,11 @@ router.get('/', autenticar, async (req, res) => {
 // cria um novo talhao com poligono
 router.post('/', autenticar, async (req, res) => {
   const { nome, cultura, area, cor, status, poligono } = req.body;
+
+  if (!nome || !area) {
+    return res.status(400).json({ erro: 'Nome e área são obrigatórios' });
+  }
+
   try {
     const resultado = await pool.query(
       'INSERT INTO talhoes (usuario_id, nome, cultura, area, cor, status, poligono) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',

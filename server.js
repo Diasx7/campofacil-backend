@@ -4,7 +4,8 @@ require('dotenv').config();
 
 const app = express();
 
-app.use(cors({ origin: 'http://localhost:3000' }));
+const origemPermitida = process.env.FRONTEND_URL || 'http://localhost:3000';
+app.use(cors({ origin: origemPermitida }));
 app.use(express.json());
 
 const authRoutes = require('./routes/authRoute');
@@ -14,6 +15,7 @@ const cadernoRoutes = require('./routes/cadernoRoute');
 const financeiroRoutes = require('./routes/financeiroRoute');
 const produtividadeRoutes = require('./routes/produtividadeRoute');
 const plantiosRoutes = require('./routes/plantiosRoute');
+const diagnosticoRoutes = require('./routes/diagnosticoRoute');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/talhoes', talhoesRoutes);
@@ -22,6 +24,7 @@ app.use('/api/caderno', cadernoRoutes);
 app.use('/api/financeiro', financeiroRoutes);
 app.use('/api/produtividade', produtividadeRoutes);
 app.use('/api/plantios', plantiosRoutes);
+app.use('/api/diagnostico', diagnosticoRoutes);
 
 app.get('/', (req, res) => {
   res.json({ mensagem: 'CampoFácil API funcionando!' });

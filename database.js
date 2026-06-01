@@ -7,7 +7,7 @@ const pool = new Pool({
   port: process.env.DB_PORT || 5432,
   database: process.env.DB_NAME || 'campofacil',
   user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || 'admin123',
+  password: process.env.DB_PASSWORD,
 });
 
 // testa a conexao quando o servidor iniciar
